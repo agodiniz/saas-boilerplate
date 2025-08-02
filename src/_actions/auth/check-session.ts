@@ -6,4 +6,5 @@ export default async function CheckSession() {
   if (!session) {
     redirect(`/login`);
   }
+  return session;
 }
