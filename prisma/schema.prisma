@@ -63,5 +63,5 @@ model VerificationToken {
 
 enum Role {
   ADMIN
-  PLAYER
+  CLIENT
 }

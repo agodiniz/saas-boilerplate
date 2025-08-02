@@ -19,6 +19,7 @@ import Spinner from "@/_components/spinner";
 
 import { calculatePasswordStrength } from "@/_utils/password-strength";
 import registerUser from "@/_actions/auth/register";
+import { Role } from "@prisma/client";
 
 
 const RegisterUserSchema = z.object({
@@ -30,7 +31,7 @@ const RegisterUserSchema = z.object({
     .email('Formato de e-mail inválido'),
   password: z.string()
     .min(8, 'Senha deve ter pelo menos 8 caracteres'),
-  role: z.string(),
+  role: z.nativeEnum(Role),
   //   confirmPassword: z.string(),
   // }).refine((data) => data.password === data.confirmPassword, {
   //   message: "As senhas não coincidem",
@@ -64,12 +65,10 @@ export default function RegisterUser() {
       name: "",
       email: "",
       password: "",
-      role: "PLAYER",
+      role: "CLIENT" as Role,
       // confirmPassword: "",
     },
   });
-
-
 
   const updateCriteriaStatus = (password: string) => {
     const newStatus = passwordCriteria.map((criterion) =>
@@ -85,7 +84,7 @@ export default function RegisterUser() {
         name: data.name,
         email: data.email,
         password: data.password,
-        role: "PLAYER",
+        role: data.role,
       })
     } catch (error) {
       console.error(error);

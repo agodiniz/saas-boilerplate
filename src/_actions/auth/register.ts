@@ -3,12 +3,13 @@
 import { db } from "@/_lib/prisma";
 import bcrypt from "bcrypt";
 import { redirect } from "next/navigation";
+import { Role } from "@prisma/client";
 
 interface RegisterData {
   name: string;
   email: string;
   password: string;
-  role: "ADMIN" | "PLAYER";
+  role: Role;
 }
 
 export default async function registerUser(data: RegisterData) {
@@ -33,7 +34,7 @@ export default async function registerUser(data: RegisterData) {
       name,
       email,
       password: hashedPassword,
-      role: "PLAYER",
+      role: role,
     },
   });
 
